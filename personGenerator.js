@@ -161,11 +161,13 @@ const personGenerator = {
         //блок генерации года рождения. Ограничил диапазоном от 1900 до 2010 года включительно
         const randomVar = Math.round(Math.random());
         let random2 = Math.round(Math.random() * 100);
-        let random3 = Math.round(Math.random() * 10)
+        let random3 = Math.round(Math.random() * 10);
+        random2 = (random2 === 100) ?
+            random2 - 1:
+            random2;
         this.person.yearOfBirthday = (randomVar === 0) ?
             random2 = (random2 < 10) ? '190' + String(random2) : '19' + random2 :
             random3 = (random3 < 10) ? '200' + String(random3) : '20' + random3;
-
 
         //блок генерации профессии
        const initProfession = () => {

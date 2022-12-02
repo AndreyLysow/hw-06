@@ -12,7 +12,7 @@
 * Bootstrap
 
 ---
-## The project is available on Githab at https://github.com/AndreyLysow/HW-04
+## The project is available on Githab at https://github.com/AndreyLysow/HW-06
 ---
 
 

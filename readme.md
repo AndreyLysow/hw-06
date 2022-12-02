@@ -3,11 +3,10 @@
 ## by Lysov Andrey
 ---
 ## How to open/launch
-## Еhis Web project is deployed on the website e-fww.ru
----
+## Еhis Web project is deployed on the website https://andreylysow.github.io/hw-06
 ## Technologies used:
 * HTML
-* CSS
+* CSSgit
 * JavaScript
 * Bootstrap
 

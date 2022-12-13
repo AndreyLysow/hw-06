@@ -1,6 +1,18 @@
+const startGen = document.getElementById('startGen');
+startGen.addEventListener('click', function() {
+    personGen();
+});
 
-window.onload = function()
-{
+const clearField = document.getElementById('clearField');
+clearField.addEventListener('click', (event) =>{
+    clear();
+});
+
+window.onload = function() {
+clear();
+};
+
+function personGen() {
     const initPerson = personGenerator.getPerson();
     document.getElementById('firstNameOutput').innerText = initPerson.firstName;
     document.getElementById('lastNameOutput').innerText = initPerson.lastName;
@@ -9,13 +21,9 @@ window.onload = function()
     document.getElementById('initBirthDay').innerText = initPerson.initBirthDay;
     document.getElementById('birthYearOutput').innerText = initPerson.yearOfBirthday;
     document.getElementById('profession').innerText = initPerson.profession;
+}
 
-};
-
-
-let button = document.getElementById('clear');
-
-button.addEventListener('click', (event) =>{
+function clear() {
     document.getElementById('firstNameOutput').innerText = "";
     document.getElementById('lastNameOutput').innerText = "";
     document.getElementById('surnameOutput').innerText = "";
@@ -23,9 +31,4 @@ button.addEventListener('click', (event) =>{
     document.getElementById('initBirthDay').innerText = "";
     document.getElementById('birthYearOutput').innerText = "";
     document.getElementById('profession').innerText = "";
-});
-
-let button2 = document.getElementById('gen');
-button2.addEventListener('click', (event) =>{
-    document.location.reload();
-});
+}

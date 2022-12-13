@@ -26,7 +26,7 @@ const personGenerator = {
             "id_1": "Александр",
             "id_2": "Максим",
             "id_3": "Иван",
-            "id_4": "Артем",
+            "id_4": "Артём",
             "id_5": "Дмитрий",
             "id_6": "Никита",
             "id_7": "Михаил",
@@ -54,38 +54,38 @@ const personGenerator = {
         }
     }`,
 
-    lastNameMaleJson: `{
-        "count": 11,
-        "list": {     
-           "id_1": "Александрович",
-            "id_2": "Максимович",
-            "id_3": "Иванович",
-            "id_4": "Артемович",
-            "id_5": "Дмитриевич",
-            "id_6": "Никитич",
-            "id_7": "Михайлович",
-            "id_8": "Даниилович",
-            "id_9": "Егорович",
-            "id_10": "Андреевич",
-            "id_11": "Петрович"
-        }
-      }`,
-        lastNameFemaleJson: `{
-        "count": 11,
-        "list": {     
-           "id_1": "Александровна",
-            "id_2": "Максимовна",
-            "id_3": "Ивановна",
-            "id_4": "Артемовна",
-            "id_5": "Дмитриевна",
-            "id_6": "Никаноровна",
-            "id_7": "Михайловна",
-            "id_8": "Данииловна",
-            "id_9": "Егоровна",
-            "id_10": "Андреевна",
-            "id_11": "Петровна"
-        }
-    }`,
+    // lastNameMaleJson: `{
+    //     "count": 11,
+    //     "list": {     
+    //        "id_1": "Александрович",
+    //         "id_2": "Максимович",
+    //         "id_3": "Иванович",
+    //         "id_4": "Артемович",
+    //         "id_5": "Дмитриевич",
+    //         "id_6": "Никитич",
+    //         "id_7": "Михайлович",
+    //         "id_8": "Даниилович",
+    //         "id_9": "Егорович",
+    //         "id_10": "Андреевич",
+    //         "id_11": "Петрович"
+    //     }
+    //   }`,
+    //     lastNameFemaleJson: `{
+    //     "count": 11,
+    //     "list": {     
+    //        "id_1": "Александровна",
+    //         "id_2": "Максимовна",
+    //         "id_3": "Ивановна",
+    //         "id_4": "Артемовна",
+    //         "id_5": "Дмитриевна",
+    //         "id_6": "Никаноровна",
+    //         "id_7": "Михайловна",
+    //         "id_8": "Данииловна",
+    //         "id_9": "Егоровна",
+    //         "id_10": "Андреевна",
+    //         "id_11": "Петровна"
+    //     }
+    // }`,
 
     professionJson: `{
         "count": 11,
@@ -127,6 +127,36 @@ const personGenerator = {
 
     },
 
+    randomLastNameMale: function() {
+    const startName = this.randomValue(this.firstNameMaleJson);
+    let lastNameMale = "";
+        if (startName.slice(-2) === 'ла') {
+            lastNameMale = startName.slice(0,-1) + 'ович';
+        } else if (startName.slice(-1) === 'а') {
+            lastNameMale = startName.slice(0,-1) + 'ич';
+        } else if (startName.slice(-3) === 'аил') {
+            lastNameMale = startName.slice(0,-2) + 'йлович';
+        }    else if (startName.slice(-1) === 'й') {
+            lastNameMale = startName.slice(0,-1) + 'евич';
+        } else lastNameMale =startName + 'ович';
+    return lastNameMale; 
+    },
+
+    randomLastNameFemale: function() {
+        const startName = this.randomValue(this.firstNameMaleJson);
+        let lastNameFemale = "";
+            if (startName.slice(-2) === 'ла') {
+                lastNameFemale = startName.slice(0,-1) + 'овна';
+            } else if (startName.slice(-1) === 'а') {
+                lastNameFemale = startName.slice(0,-1) + 'ична';
+            } else if (startName.slice(-3) === 'аил') {
+                lastNameFemale = startName.slice(0,-2) + 'йловна';
+            }    else if (startName.slice(-1) === 'й') {
+                lastNameFemale = startName.slice(0,-1) + 'евна';
+            } else lastNameFemale =startName + 'овна';
+        return lastNameFemale; 
+        },
+
     randomProfession: function() {
         const randomProf = this.randomValue(this.professionJson);
         return randomProf;
@@ -149,9 +179,9 @@ const personGenerator = {
 
         // блок генерации отчества. Используется тернарный оператор для обращению к списку женских и мужских отчеств, в зависимости от приходящего имени
         this.person.lastName = (this.person.gender === 'Мужчина') ?
-            this.randomValue(this.lastNameMaleJson) :
-            this.randomValue(this.lastNameFemaleJson);
-
+        this.randomLastNameMale():
+        this.randomLastNameFemale();
+        
         //блок генерации фамилии. В случае если приходит женоское имя, женская фамилия генерируется путем конкатенации буквы "а", если сгененрировано женское имя
         this.person.surname = (this.person.gender === 'Мужчина') ?
             this.randomValue(this.surnameJson) :
@@ -161,13 +191,20 @@ const personGenerator = {
         //блок генерации года рождения. Ограничил диапазоном от 1900 до 2010 года включительно
         const randomVar = Math.round(Math.random());
         let random2 = Math.round(Math.random() * 100);
+          random2 = (random2 === 100) ? random2 - 1: random2;
         let random3 = Math.round(Math.random() * 10);
-        random2 = (random2 === 100) ?
-            random2 - 1:
-            random2;
-        this.person.yearOfBirthday = (randomVar === 0) ?
-            random2 = (random2 < 10) ? '190' + String(random2) : '19' + random2 :
-            random3 = (random3 < 10) ? '200' + String(random3) : '20' + random3;
+        if (randomVar === 0) {
+            if (random2 < 10) {
+                this.person.yearOfBirthday = '190' + String(random2);
+            } else  this.person.yearOfBirthday = '19' + random2;
+        } else {
+              if (random3 < 10) {
+                this.person.yearOfBirthday = '200' + String(random3);
+            } else  this.person.yearOfBirthday = '20' + random3;
+        }
+        // this.person.yearOfBirthday = (randomVar === 0) ?
+        //     random2 = (random2 < 10) ? '190' + String(random2) : '19' + random2 :
+        //     random3 = (random3 < 10) ? '200' + String(random3) : '20' + random3;
 
         //блок генерации профессии
        const initProfession = () => {
@@ -218,7 +255,10 @@ const personGenerator = {
                 };
             let monthString = monthConvert(genMonthCorrect);
             let genDay = Math.round(Math.random()*initDaysInMonth);
-            return genDay + monthString;
+            genDayCorrect = (genDay === 0) ?
+            1:
+            genDay;
+            return genDayCorrect + monthString;
         };
 
         this.person.initBirthDay = initBirthDay();
